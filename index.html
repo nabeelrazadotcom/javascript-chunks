@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Element in JS</title>
+
+</head>
+<body style="background-color: #212121; color: #fff">
+    
+    
+</body>
+
+<script>
+
+    let title = document.createElement('h1')
+    title.className = 'mainHeading'
+    title.id = 'Heading'
+    title.style.color = 'orange'
+    <!-- title.innerText = 'Created by Javascript DOM' -->
+
+    let heading_text = document.createTextNode('Create element in DOM')
+    title.appendChild(heading_text)
+
+    let container = document.createElement('div')
+    container.className = 'container'
+    container.style.height = '100px'
+    container.style.backgroundColor = 'white'
+    container.style.color = 'black'
+    container.style.textAlign = 'center'
+    container.innerText = 'Rana'
+
+    document.body.appendChild(title)
+    document.body.appendChild(container)
+
+</script>
+
+</html>

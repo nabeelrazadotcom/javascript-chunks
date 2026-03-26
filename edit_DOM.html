@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editing element in DOM</title>
+</head>
+<body style="background-color: #212121; color: #fff">
+    <ul class="courses">
+        <li>Basic Computing</li>
+    </ul>
+</body>
+<script>
+
+    function addCourse(courseName) {
+        let course = document.createElement('li')
+        course.appendChild(document.createTextNode(courseName))
+        document.querySelector('.courses').appendChild(course)
+    }
+
+    addCourse('English Spoken')
+    addCourse('Drone Operating')
+
+</script>
+
+</html>
