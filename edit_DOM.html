@@ -20,6 +20,22 @@
 
     addCourse('English Spoken')
     addCourse('Drone Operating')
+    addCourse('MS Office')
+
+    // edit
+    let secondCourse = document.querySelector('li:nth-child(2)')
+    let newcourse = document.createElement('li')
+    newcourse.textContent = 'Touch Typing'
+
+    secondCourse.replaceWith(newcourse)
+
+    let firstCouse = document.querySelector('li:first-child')
+    firstCouse.outerHTML = '<li>Time Management</li>'
+
+    // remove
+    let thirdCourse = document.querySelector('li:nth-child(3)')
+    thirdCourse.remove()
+
 
 </script>
 
