@@ -1,0 +1,313 @@
+@import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Press+Start+2P&display=swap");
+
+:root {
+  --page-bg: linear-gradient(180deg, #ffd8a8 0%, #f5b56b 100%);
+  --surface: #160f00;
+  --surface-2: #2c1b00;
+  --surface-3: rgba(255, 236, 195, 0.14);
+  --text-main: #ffe8c2;
+  --text-soft: #f8c57b;
+  --text-strong: #fff6e2;
+  --accent: #ffbd59;
+  --accent-strong: #ff9f1c;
+  --danger: #ff5f5f;
+  --shadow-lg: 0 24px 60px rgba(22, 15, 0, 0.22);
+  --shadow-inset: inset 0 0 0 2px rgba(22, 15, 0, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Bubblegum Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body.game-page {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-main);
+  background: var(--page-bg);
+}
+
+.game-nav {
+  gap: 0.75rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.game-nav a {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.game-shell {
+  min-height: calc(100vh - 88px);
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.card {
+  width: min(100%, 48rem);
+  margin: 0 auto;
+  border: none;
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at top, rgba(255, 189, 89, 0.18), transparent 35%),
+    var(--surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-lg);
+  padding-inline: clamp(1.25rem, 4vw, 2.75rem) !important;
+  padding-block: clamp(1.15rem, 2.6vw, 2rem) !important;
+}
+
+.header {
+  align-items: center;
+}
+
+.eyebrow {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
+}
+
+.main-heading {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: var(--text-strong);
+  font-size: clamp(1.35rem, 2vw + 0.6rem, 2.45rem);
+  line-height: 1.35;
+}
+
+.header-copy {
+  max-width: 38rem;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.2vw + 0.75rem, 1.35rem);
+  line-height: 1.45;
+}
+
+.status-strip {
+  display: block;
+}
+
+.status-strip p {
+  padding: 0.8rem 1rem;
+  border-radius: 1rem;
+  background: var(--surface-3);
+  color: var(--text-soft);
+  text-align: center;
+  font-size: clamp(0.95rem, 1vw + 0.7rem, 1.1rem);
+  line-height: 1.35;
+}
+
+.form {
+  width: 100%;
+}
+
+#guess {
+  font-size: clamp(1.3rem, 1.4vw + 0.95rem, 2rem);
+  text-align: center;
+  color: #fff0a8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform-origin: center;
+}
+
+#guess.is-win {
+  animation: winPop 3s cubic-bezier(0.2, 0.9, 0.22, 1) both;
+}
+
+#guess.is-lose {
+  animation: loseZoom 3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+#guessField {
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  font-size: clamp(1.1rem, 1vw + 0.9rem, 1.45rem);
+  font-weight: 700;
+  text-align: center;
+  color: #201300;
+  background-color: #ffe5c5;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-shadow: var(--shadow-inset);
+}
+
+#guessField::-webkit-outer-spin-button,
+#guessField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#guessField[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#guessField::placeholder {
+  color: rgba(32, 19, 0, 0.68);
+}
+
+#guessField:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+}
+
+#guessField:focus::placeholder {
+  visibility: hidden;
+}
+
+#subt,
+.startOver {
+  width: min(100%, 18rem);
+  align-self: center;
+  font-size: clamp(1rem, 0.9vw + 0.85rem, 1.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.95rem 1.4rem;
+  color: var(--surface);
+  background: linear-gradient(180deg, #ffc86e 0%, #ff9f1c 100%);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.28);
+}
+
+#subt:hover,
+.startOver:hover {
+  background: linear-gradient(180deg, #ffd58d 0%, #ffae39 100%);
+  color: #291700;
+}
+
+#subt:focus-visible,
+.startOver:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 3px;
+}
+
+.startOver {
+  background: linear-gradient(180deg, #fff1d1 0%, #ffd894 100%);
+  color: #8a1c00;
+}
+
+.resultParas {
+  padding: clamp(0.85rem, 1.6vw, 1.05rem);
+  border-radius: 1.25rem;
+  background: var(--surface-2);
+}
+
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.2rem;
+}
+
+.stat-label {
+  font-size: clamp(1rem, 1vw + 0.7rem, 1.2rem);
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: clamp(1.05rem, 1vw + 0.75rem, 1.4rem);
+  color: var(--text-strong);
+  text-align: right;
+}
+
+.guesses {
+  word-break: break-word;
+}
+
+.lowOrHi {
+  min-height: 1.5em;
+  margin-top: 0.25rem !important;
+  color: #fff0a8;
+  font-size: clamp(1rem, 1vw + 0.75rem, 1.2rem);
+  text-align: center;
+  line-height: 1.35;
+}
+
+.game-credit {
+  margin-top: 0.35rem !important;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  background: rgba(255, 255, 255, 0.9);
+  width: fit-content;
+  align-self: center;
+}
+
+@keyframes winPop {
+  0% {
+    transform: scale(4);
+    opacity: 0;
+    letter-spacing: 0.18em;
+  }
+
+  80% {
+    transform: scale(0.9);
+    opacity: 1;
+    letter-spacing: 0.1em;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    letter-spacing: 0.08em;
+  }
+}
+
+@keyframes loseZoom {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+    filter: blur(6px);
+  }
+
+  70% {
+    transform: scale(3);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .game-shell {
+    min-height: auto;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .card {
+    border-radius: 1.5rem;
+  }
+
+  .stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .stat-value {
+    text-align: left;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    width: min(100%, 54rem);
+  }
+}
