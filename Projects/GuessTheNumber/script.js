@@ -17,7 +17,8 @@ credit.innerHTML = 'Developed by Raosaab'
 credit.classList.add('text-dark', 'text-center', 'game-credit')
 document.querySelector('.resultParas').appendChild(credit)
 
-let playGame = true;
+let playGame = true; // Main Variable
+
 const guessLabel = document.querySelector("#guess");
 
 submit.addEventListener("click", function (e) {
