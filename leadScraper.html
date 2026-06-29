@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock Lead Scraper</title>
+    <style>
+      body {
+        background-color: #212121;
+        color: #fff;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+      }
+
+      /* navbar */
+      h1 {
+        margin-bottom: 4rem;
+        background-color: black;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+      }
+
+      h4 {
+        color: #ffcccc;
+      }
+
+      button {
+        background-color: black;
+        border: none;
+        color: green;
+        padding: 15px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 2rem;
+        border-radius: 50px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition-duration: all 0.7s ease-in-out;
+      }
+
+      button:hover {
+        background-color: rgb(0, 19, 0);
+        color: tomato;
+      }
+
+      button:active {
+        background-color: rgb(0, 34, 0);
+        color: rgb(255, 255, 255);
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .loadBox h3 {
+        font-weight: lighter;
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Mock Lead Scraper</h1>
+    <h2>Your leads will appear here:</h2>
+    <h4>Click 'Start' button to fetching leads.</h4>
+    <button>Start</button>
+    <div class="loadBox"></div>
+
+    <script>
+      let button = document.querySelector("button");
+      let h4 = document.querySelector("h4");
+      let contentBox = document.querySelector(".loadBox");
+      let logging;
+      let timer;
+      let loading = false;
+
+      button.addEventListener("click", function () {
+        if (loading == false) {
+          button.style.color = "red";
+          button.innerText = "Stop";
+          h4.style.color = "royalblue";
+          h4.innerText = "Working...";
+          let log = document.createElement("h3");
+          log.textContent = "Fetching new leads data....";
+          contentBox.appendChild(log);
+
+          // Starting loading
+          logging = setInterval(function () {
+            console.log("loading");
+            let log = document.createElement("h3");
+            log.textContent = "Fetching new leads data....";
+            contentBox.appendChild(log);
+          }, 2000);
+
+          loading = true;
+          console.log(loading);
+        }
+        if (loading == true) {
+          timer = setTimeout(function () {
+            console.log("cleared");
+            button.style.color = "Green";
+            button.innerText = "Start";
+            h4.style.color = "gray";
+            h4.innerText = "Click 'Start' button to fetching leads.";
+
+            let log = document.createElement("h3");
+            log.textContent = "Data Fetching Completed.";
+            log.style.color = "Green";
+            contentBox.appendChild(log);
+
+            clearInterval(logging);
+            loading = false;
+          }, 10000);
+        }
+
+        // Stop loading if stop button is clicked
+        button.addEventListener("click", function () {
+          if (loading == true) {
+            button.style.color = "Green";
+            button.innerText = "Start";
+            h4.style.color = "gray";
+            h4.innerText = "Click 'Start' button to fetching leads.";
+
+            let log = document.createElement("h3");
+            log.textContent = "Interupted.";
+            log.style.color = "red";
+            contentBox.appendChild(log);
+            clearTimeout(timer);
+            clearInterval(logging);
+            loading = false;
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

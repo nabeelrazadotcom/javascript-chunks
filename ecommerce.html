@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flash Sale</title>
+    <style>
+      body {
+        background-color: #212121;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: azure;
+      }
+
+      .blinking {
+        animation: blinker 1s linear infinite;
+      }
+
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Flash Sale</h1>
+    <h2>Ending in: <span class="time"></span></h2>
+
+    <script>
+      const time = document.querySelector(".time");
+      let min = 5;
+      let sec = 0;
+
+      const timer = () => {
+        // Sab se pehle check karo ke timer khatam toh nahi ho gaya
+        if (min === 0 && sec === 0) {
+          clearInterval(ticker);
+          time.innerHTML = `00:00`;
+          document.querySelector("h1").classList.add("blinking");
+          document.querySelector("h1").innerHTML = "Flash Sale Over";
+          return;
+        }
+
+        // Time decrease karne ki logic
+        if (sec === 0) {
+          sec = 59;
+          min -= 1;
+        } else {
+          sec -= 1;
+        }
+
+        // Formatting (05:09 type display ke liye)
+        let formattedSec = sec < 10 ? `0${sec}` : sec;
+        let formattedMin = min < 10 ? `0${min}` : min;
+
+        time.innerHTML = `${formattedMin}:${formattedSec}`;
+      };
+
+      const ticker = setInterval(timer, 1000);
+    </script>
+  </body>
+</html>

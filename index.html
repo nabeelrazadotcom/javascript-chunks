@@ -1,38 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Creating Element in JS</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
 
-</head>
-<body style="background-color: #212121; color: #fff">
-    
-    
-</body>
+      button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
 
-<script>
+      .toast {
+        position: fixed;
+        top: 20px;
+        width: 300px;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.5s ease-in;
+      }
 
-    let title = document.createElement('h1')
-    title.className = 'mainHeading'
-    title.id = 'Heading'
-    title.style.color = 'orange'
-    <!-- title.innerText = 'Created by Javascript DOM' -->
+      #eyebrow {
+        font-size: 12px;
+        background-color: gray;
+        border-radius: 10px;
+        width: fit-content;
+        color: black;
+        padding: 2px 5px;
+      }
 
-    let heading_text = document.createTextNode('Create element in DOM')
-    title.appendChild(heading_text)
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
 
-    let container = document.createElement('div')
-    container.className = 'container'
-    container.style.height = '100px'
-    container.style.backgroundColor = 'white'
-    container.style.color = 'black'
-    container.style.textAlign = 'center'
-    container.innerText = 'Rana'
+      #close {
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 50%;
+        display: flex;
+        align-self: flex-start;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
 
-    document.body.appendChild(title)
-    document.body.appendChild(container)
+      #msg {
+        font-weight: bold;
+        font-family: sans-serif;
+      }
 
-</script>
+      .hide {
+        top: -100px;
+        transition: all 0.3s ease-out;
+      }
 
+      @keyframes slide {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(100px);
+        }
+      }
+    </style>
+  </head>
+  <body style="background-color: #212121; color: #fff">
+    <!-- toast button -->
+    <button class="submit">Submit</button>
+
+    <!-- toast div -->
+    <div class="toast hide">
+      <div class="content">
+        <div id="eyebrow">Notification</div>
+        <div id="msg">Form submitted successfully!</div>
+      </div>
+      <div id="close">&times</div>
+    </div>
+  </body>
+
+  <script>
+    const submit = document.querySelector("button");
+    const toast = document.querySelector(".toast");
+    const cancel = document.querySelector("#close");
+
+    const Notification = () => {
+      toast.classList.toggle("hide");
+    };
+
+    let set
+
+    submit.addEventListener("click", function () {
+
+      if (set) {
+        clearTimeout(set);
+      }
+
+      Notification();
+      set = setTimeout(Notification, 3000);
+    });
+
+    cancel.addEventListener("click", function () {
+      clearTimeout(set);
+      Notification();
+    });
+  </script>
 </html>

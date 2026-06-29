@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown</title>
+    <style>
+      body {
+        background-color: #2d2d2d;
+        color: royalblue;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      #timer {
+        font-size: 3rem;
+        color: tomato;
+      }
+
+      button {
+        background-color: royalblue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: darkblue;
+      }
+
+      .disable {
+        background-color: gray;
+        color: #2d2d2d;
+        cursor: none;
+      }
+      .disable:hover {
+        background-color: gray;
+        color: #2d2d2d;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Countdown</h1>
+    <div id="timer">00</div>
+    <button class="start">Start</button>
+
+    <script>
+      const timerBox = document.querySelector("#timer");
+      const start = document.querySelector("button");
+
+      let sec = 10;
+      let ticker;
+      let isTicking = false;
+
+      start.addEventListener("click", () => {
+        if (!isTicking) {
+          console.log("started");
+          timerBox.textContent = sec;
+          sec -= 1;
+          start.classList.add("disable");
+          start.setAttribute("disabled", true);
+
+          ticker = setInterval(() => {
+            if (sec === 0) {
+              clearInterval(ticker);
+              isTicking = false;
+              sec = 10;
+              timerBox.textContent = "00";
+              start.classList.remove("disable");
+              start.removeAttribute("disabled", );
+              console.log("stopped");
+              return;
+            }
+
+            timerBox.textContent = sec;
+            sec -= 1;
+          }, 1000);
+
+          isTicking = true;
+        }
+      });
+    </script>
+  </body>
+</html>
