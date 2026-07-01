@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StopWatch</title>
+    <style>
+      body {
+        background-color: #2d2d2d;
+        color: tomato;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .time {
+        margin-bottom: 20px;
+        display: flex;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .time span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        min-height: 70px;
+        min-width: 70px;
+        background-color: #ff4321;
+        border-radius: 20%;
+      }
+
+      .btns {
+        display: flex;
+      }
+
+      .btns button {
+        background-color: tomato;
+        color: white;
+        border: none;
+        min-width: 5.5rem;
+        height: 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.1s ease-in;
+      }
+
+      #pauseBtn {
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+      }
+      #resetBtn {
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+      }
+
+      button:hover {
+        background-color: #ff4321;
+        scale: 0.98;
+    }
+
+    button:active {
+        scale: 0.96;
+        transform: translateY(1px);
+    }
+    
+    button:disabled {
+        background-color: #555;
+        color: gray;
+        cursor: not-allowed;
+    }
+    
+    button:disabled:hover {
+        scale: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>StopWatch</h1>
+    <div class="time">
+      <span class="min">00</span>
+      <span class="sec">00</span>
+      <span class="ms">00</span>
+    </div>
+
+    <div class="btns">
+      <button disabled id="pauseBtn">Pause</button>
+      <button id="startStopBtn">Start</button>
+      <button disabled id="resetBtn">Reset</button>
+    </div>
+
+    <script>
+      const minBox = document.querySelector(".min");
+      const secBox = document.querySelector(".sec");
+      const msBox = document.querySelector(".ms");
+      const mainBtn = document.querySelector("#startStopBtn");
+      const pauseBtn = document.querySelector("#pauseBtn");
+      const resetBtn = document.querySelector("#resetBtn");
+
+      let min = 0;
+      let sec = 0;
+      let ms = 0;
+
+      let isRunning = false;
+      let ticker;
+
+      function pad(num) {
+        return String(num).padStart(2, "0");
+      }
+
+      // Start / Stop
+      mainBtn.addEventListener("click", () => {
+        // Start Logic
+        if (!isRunning) {
+          sec = 0;
+          min = 0;
+          ms = 0;
+          minBox.textContent = `${pad(min)}`;
+          secBox.textContent = `${pad(sec)}`;
+          msBox.textContent = `${pad(ms)}`;
+          isRunning = true;
+          isPaused = false;
+
+          // change buttons
+          mainBtn.textContent = "Stop";
+          pauseBtn.textContent = "Pause";
+          pauseBtn.removeAttribute("disabled");
+          resetBtn.removeAttribute("disabled");
+
+          ticker = setInterval(() => {
+            if (ms === 99) {
+              ms = 0;
+              sec += 1;
+            }
+
+            if (sec === 59) {
+              sec = 0;
+              min += 1;
+            }
+
+            ms += 1;
+
+            minBox.textContent = `${pad(min)}`;
+            secBox.textContent = `${pad(sec)}`;
+            msBox.textContent = `${pad(ms)}`;
+          }, 10);
+          return;
+        }
+
+        // Stop Logic
+        if (isRunning) {
+          clearInterval(ticker);
+          sec = 0;
+          min = 0;
+          ms = 0;
+          minBox.textContent = `${pad(min)}`;
+          secBox.textContent = `${pad(sec)}`;
+          msBox.textContent = `${pad(ms)}`;
+
+          isRunning = false;
+          isPaused = false;
+
+          // Change buttons
+          mainBtn.textContent = "Start";
+          pauseBtn.textContent = "Pause";
+          pauseBtn.setAttribute("disabled", true);
+          resetBtn.setAttribute("disabled", true);
+
+          return;
+        }
+      });
+
+      let isPaused = false;
+      // Pause State
+      pauseBtn.addEventListener("click", () => {
+        // Pause Logic
+
+        if (!isPaused) {
+          clearInterval(ticker);
+          isPaused = true;
+          isRunning = false;
+
+          // Change buttons
+          pauseBtn.textContent = "Resume";
+          mainBtn.textContent = "Start Over";
+
+          return;
+        }
+
+        // Resume Logic
+        if (isPaused) {
+          ticker = setInterval(() => {
+            ms += 1;
+
+            if (ms === 100) {
+              ms = 1;
+              sec += 1;
+            }
+
+            if (sec === 59) {
+              sec = 0;
+              min += 1;
+            }
+            minBox.textContent = `${pad(min)}`;
+            secBox.textContent = `${pad(sec)}`;
+            msBox.textContent = `${pad(ms)}`;
+          }, 10);
+
+          isPaused = false;
+          isRunning = true;
+
+          // Change Buttons
+          pauseBtn.textContent = "Pause";
+        }
+      });
+
+      // Reset State
+      resetBtn.addEventListener("click", () => {
+        // Reset Logic
+        sec = 0;
+        min = 0;
+        ms = 0;
+        minBox.textContent = `${pad(min)}`;
+        secBox.textContent = `${pad(sec)}`;
+        msBox.textContent = `${pad(ms)}`;
+        clearInterval(ticker);
+
+        isPaused = false;
+        isRunning = false;
+
+        // Change buttons
+        mainBtn.textContent = "Start";
+        pauseBtn.setAttribute("disabled", true);
+        resetBtn.setAttribute("disabled", true);
+
+        return;
+      });
+    </script>
+  </body>
+</html>
