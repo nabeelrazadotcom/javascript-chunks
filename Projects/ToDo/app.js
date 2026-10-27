@@ -10,6 +10,7 @@ const countEl    = document.getElementById('count');
 const emptyState = document.getElementById('empty-state');
 const clearBtn   = document.getElementById('clear-btn');
 const filterIndicator = document.querySelector('.filter-indicator');
+const filterBtns = document.querySelectorAll('.filter-btn');
 
 function updateFilterIndicator(btn) {
   const rect = btn.getBoundingClientRect();
