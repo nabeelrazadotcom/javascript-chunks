@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Lights</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #2d2d2d;
+        margin-top: 50px;
+      }
+
+      /* how to make the sun light smooth and no flickering in css and js?
+      answer: Use CSS transitions or animations 
+      implement: */
+
+      .sun {
+        position: absolute;
+        z-index: -1;
+        top: -30px;
+        left: -20px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgb(255, 217, 0);
+        margin: 0 auto 20px auto;
+        box-shadow: 0 0 200px 20px gold;
+        transition: box-shadow 0.5s ease;
+        
+      }
+
+      
+
+      h1 {
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .timer {
+        font-size: 2rem;
+        font-family: "Courier New", Courier, monospace;
+        margin-bottom: 20px;
+        color: white;
+        background-color: #000000;
+        width: 200px;
+        margin: 0 auto 20px auto;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #time {
+        color: greenyellow;
+      }
+
+      #trafficLights {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 120px;
+        margin: 0 auto;
+        border-radius: 25%;
+        background-color: #000000;
+        margin-bottom: 20px;
+        border: 5px solid #333333;
+      }
+
+      .light {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 10px 0;
+        outline-offset: -5px;
+        outline: 2px solid #000000;
+      }
+
+      .red {
+        background-color: #4d0000;
+      }
+      .yellow {
+        background-color: #4d4d00;
+      }
+      .green {
+        background-color: #004d00;
+      }
+
+      .red.active {
+        background-color: red;
+        box-shadow: 0 0 20px red;
+      }
+      .yellow.active {
+        background-color: yellow;
+        box-shadow: 0 0 20px yellow;
+      }
+      .green.active {
+        background-color: rgb(0, 255, 0);
+        box-shadow: 0 0 20px rgb(0, 255, 0);
+      }
+
+      button {
+        padding: 10px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #000000;
+        border: none;
+        color: white;
+      }
+      button:hover {
+        background-color: #444444;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="sun"></div>
+    <h1>Traffic Lights</h1>
+    <div class="timer"><span id="time">00</span></div>
+    <div id="trafficLights">
+      <div class="light red"></div>
+      <div class="light yellow"></div>
+      <div class="light green"></div>
+    </div>
+    <button id="startButton">Start</button>
+
+    <script>
+      const timer = document.querySelector("#time");
+      const btn = document.querySelector("button");
+      const redLit = document.querySelector(".red");
+      const yellowLit = document.querySelector(".yellow");
+      const greenLit = document.querySelector(".green");
+
+      let sec = 0;
+      let isRunning = false;
+      let ticker;
+      let timeout;
+      let running = true;
+      let lights = [redLit, yellowLit, greenLit];
+      let currentState = "yellow";
+      let state = "Ready";
+
+      function off(light) {
+        light.classList.remove("active");
+        return;
+      }
+      function on(light) {
+        light.classList.add("active");
+        return;
+      }
+
+      btn.addEventListener("click", () => {
+                // timer
+        if (!isRunning) {
+          ticker = setInterval(() => {
+            if (sec === 0) {
+
+              if (currentState == "red") {
+                currentState = "yellow";
+                off(redLit);
+                on(yellowLit);
+                state = "Ready!";
+                sec = 10;
+
+              } else if (currentState == "green") {
+                currentState = "red";
+                off(greenLit);
+                on(redLit);
+                state = "Stop!";
+                sec = 3;
+
+              } else if (currentState == "yellow") {
+                currentState = "green";
+                off(yellowLit);
+                on(greenLit);
+                state = "Go!";
+                sec = 10;
+              }
+              
+            }
+            timer.textContent = `${state} ${sec}`;
+            sec -= 1;
+          }, 1000);
+          isRunning = true;
+          btn.textContent = "Stop";
+
+        } else { // stop logic
+          clearInterval(ticker);
+          btn.textContent = "Start";
+          isRunning = false;
+        } 
+
+      });
+
+      
+    </script>
+  </body>
+</html>

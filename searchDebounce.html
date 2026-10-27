@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruit Search</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #111827;
+        color: #f9fafb;
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      /* ── Header ── */
+      .header {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+
+      .header .emoji {
+        font-size: 2.8rem;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #f9fafb;
+        letter-spacing: -0.5px;
+      }
+
+      .header p {
+        margin-top: 6px;
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      /* ── Card ── */
+      .card {
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 460px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      /* ── Search Input ── */
+      .search-wrapper {
+        position: relative;
+        margin-bottom: 8px;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 1rem;
+        pointer-events: none;
+      }
+
+      #searchInput {
+        width: 100%;
+        background-color: #111827;
+        border: 1.5px solid #374151;
+        border-radius: 10px;
+        color: #f9fafb;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        padding: 12px 14px 12px 40px;
+        outline: none;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      #searchInput::placeholder {
+        color: #4b5563;
+      }
+
+      #searchInput:focus {
+        border-color: #f59e0b;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+      }
+
+      /* ── Hint ── */
+      .hint {
+        font-size: 0.75rem;
+        color: #4b5563;
+        text-align: right;
+        margin-bottom: 16px;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .hint span {
+        color: #f59e0b;
+      }
+
+      /* ── Results ── */
+      #results {
+        min-height: 48px;
+      }
+
+      .result-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: #d1d5db;
+        cursor: default;
+        transition: background-color 0.15s ease;
+      }
+
+      .result-item:hover {
+        background-color: #374151;
+        color: #f9fafb;
+      }
+
+      .result-item .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #f59e0b;
+        flex-shrink: 0;
+      }
+
+      /* bold matched text — tumhara JS ye class lagayega */
+      .result-item .match {
+        color: #f59e0b;
+        font-weight: 600;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: #4b5563;
+        font-size: 0.875rem;
+      }
+
+      .empty-state .big {
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      /* ── Footer Counter ── */
+      .footer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        color: #4b5563;
+      }
+
+      .footer .count {
+        color: #f59e0b;
+        font-weight: 500;
+      }
+
+      .footer .badge {
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 20px;
+        padding: 4px 12px;
+      }
+
+      .message {
+        color: gray;
+      }
+
+      .match {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span class="emoji">🍑</span>
+      <h1>Fruit Search</h1>
+      <p>Type to search — results appear after you stop typing</p>
+    </div>
+
+    <div class="card">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="e.g. mango, apple, kiwi..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="hint">debounce delay: <span>500ms</span></div>
+
+      <div id="results"></div>
+    </div>
+
+    <div class="footer">
+      <div class="badge">
+        searches fired: <span class="count" id="counter">0</span>
+      </div>
+    </div>
+
+    <script>
+      // ─────────────────────────────────────────
+      // DATA
+      // ─────────────────────────────────────────
+      const fruits = [
+        "Apple",
+        "Apricot",
+        "Avocado",
+        "Banana",
+        "Blueberry",
+        "Cherry",
+        "Coconut",
+        "Grape",
+        "Guava",
+        "Kiwi",
+        "Lemon",
+        "Mango",
+        "Orange",
+        "Papaya",
+        "Peach",
+        "Pear",
+        "Pineapple",
+        "Strawberry",
+        "Watermelon",
+      ];
+
+      // ─────────────────────────────────────────
+      // DOM
+      // ─────────────────────────────────────────
+      const searchInput = document.querySelector("#searchInput");
+      const results = document.querySelector("#results");
+      const counter = document.querySelector("#counter");
+
+      results.innerHTML =
+        "<div class='message'>Write something to search.... <div>";
+
+      function addResult(value) {
+        let newLi = document.createElement("div");
+        newLi.innerHTML = value;
+        results.appendChild(newLi);
+      }
+
+      let debounceTimer; // setTimeout ID
+      let searchCount = 0; // kitni baar search fire hua
+
+      searchInput.addEventListener("input", () => {
+        if (searchInput.value !== "") {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            search(searchInput.value);
+          }, 500);
+        } else if (searchInput.value == "") {
+          results.innerHTML =
+            "<div class='message'>Write something to search.... </div>";
+          clearTimeout(debounceTimer);
+        }
+      });
+
+      function search(query) {
+        results.innerHTML = "";
+
+        let matched = fruits.filter((value) =>
+          value.toLowerCase().includes(query.toLowerCase()),
+        );
+
+        if (matched.length > 0) {
+          matched.forEach((value) => {
+            addResult(value.replace(query, `<span class='match'>${query}</span>`));
+          });
+        } else {
+          results.innerHTML =
+            "<div class='message'>No results.... </div>";
+          return
+        }
+      }
+
+      
+    </script>
+  </body>
+</html>

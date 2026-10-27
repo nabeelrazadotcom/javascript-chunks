@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #222;
+        font-family: "helvetica";
+        color: #2f2f;
+      }
+
+      .main {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      input, .submit {
+        padding: 5px;
+        border-radius: 50px;
+        background-color: #333;
+        border: none;
+      }
+      
+      .submit {
+        color: white;
+        background-color: #555;
+      }
+
+      .card {
+        border: 1px solid #555;
+        border-radius: 10px;
+        max-width: 300px;
+        padding: 15px;
+        color: white;
+      }
+
+      .card img {
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .card h3 {
+        margin-bottom: 3px;
+      }
+
+      .card p {
+        margin-top: 10px;
+        font-size: 13px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main">
+        <form action="">
+            <input type="text" placeholder="Name" name="name" id="">
+            <input type="email" placeholder="Email" name="email" id="">
+            <input type="about" placeholder="About" name="about" id="">
+            <input type="file" name="pfp" id="">
+            <button class="submit" type="submit">Submit</button>
+        </form>
+
+        <div class="card">
+            <img src="./profile-default-svgrepo-com.svg" alt="pfp">
+            <h3>Rana</h3>
+            <h5>QA Associate</h5>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est, esse. Quidem vel praesentium est odit numquam aspernatur. Debitis, pariatur similique?</p>
+        </div>
+    </div>
+
+
+    <script>
+
+        
+
+
+    </script>
+  </body>
+</html>

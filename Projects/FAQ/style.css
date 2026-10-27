@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --primary: #172b4d;
+      --accent: #3267e3;
+      --text: #263449;
+      --muted: #6e7b8e;
+      --border: #e5eaf2;
+      --surface: #ffffff;
+      --background: #f5f7fb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 100px 24px;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    .faq-section {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .faq-label {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid #dce6ff;
+      border-radius: 50px;
+      background: #eaf0ff;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .faq-header h1 {
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.15;
+    }
+
+    .faq-header h1 span {
+      color: var(--accent);
+    }
+
+    .faq-header > p {
+      max-width: 540px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    /* Accordion */
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .accordion li {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 3px 12px rgb(23 43 77 / 3%);
+      transition:
+        border-color 250ms ease,
+        box-shadow 250ms ease,
+        transform 250ms ease;
+    }
+
+    .accordion li:hover {
+      border-color: #cbd8f5;
+      box-shadow: 0 8px 24px rgb(23 43 77 / 6%);
+      transform: translateY(-2px);
+    }
+
+    /* Question */
+
+    .accordion li h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 23px 25px;
+      color: var(--primary);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .question-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Minimal SVG arrow */
+
+    .faq-arrow {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--muted);
+      transition:
+        transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        color 250ms ease;
+    }
+
+    .accordion li:hover .faq-arrow {
+      color: var(--accent);
+    }
+
+    .accordion li.active {
+      border-color: #c8d6fa;
+    }
+
+    .accordion li.active h3 {
+      color: var(--accent);
+    }
+
+    .accordion li.active .faq-arrow {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    /* Answer */
+
+    .accordion li p {
+      padding: 0 25px 24px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+        display: none;
+
+    }
+
+    /* Responsive */
+
+    @media (max-width: 600px) {
+      body {
+        padding: 64px 16px;
+      }
+
+      .faq-header {
+        margin-bottom: 32px;
+      }
+
+      .faq-header h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .faq-header > p {
+        font-size: 14px;
+      }
+
+      .accordion {
+        gap: 10px;
+      }
+
+      .accordion li {
+        border-radius: 12px;
+      }
+
+      .accordion li h3 {
+        gap: 14px;
+        padding: 19px 18px;
+        font-size: 14px;
+      }
+
+      .faq-arrow {
+        width: 18px;
+        height: 18px;
+      }
+
+      .accordion li p {
+        padding: 0 18px 20px;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+    }
+
+    /* Respect reduced-motion preferences */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }

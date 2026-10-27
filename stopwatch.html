@@ -140,12 +140,12 @@
           resetBtn.removeAttribute("disabled");
 
           ticker = setInterval(() => {
-            if (ms === 99) {
+            if (ms === 100) {
               ms = 0;
               sec += 1;
             }
 
-            if (sec === 59) {
+            if (sec === 60) {
               sec = 0;
               min += 1;
             }
@@ -202,17 +202,17 @@
         // Resume Logic
         if (isPaused) {
           ticker = setInterval(() => {
-            ms += 1;
-
+            
             if (ms === 100) {
               ms = 1;
               sec += 1;
             }
-
+            
             if (sec === 59) {
               sec = 0;
               min += 1;
             }
+            ms += 1;
             minBox.textContent = `${pad(min)}`;
             secBox.textContent = `${pad(sec)}`;
             msBox.textContent = `${pad(ms)}`;

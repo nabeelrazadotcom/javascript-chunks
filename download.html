@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassmorphism Download Progress</title>
+  <style>
+    /* Reset & Background */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Dark rich gradient helps highlight the glass look */
+      background: linear-gradient(135deg, #0f172a, #1e1b4b, #311042);
+    }
+
+    /* Glassmorphism Card Container */
+    .progress-card {
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      border-radius: 16px;
+      
+      /* The core glass elements: semi-transparent white backdrop & blur filter */
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      
+      /* Subtle borders and shadows mimic reflective depth */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    /* Header Text layout */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .status-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .percentage-text {
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Empty Progress Track */
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden; /* Keeps the internal fill rounded */
+    }
+
+    /* Active Progress Fill */
+    .progress-fill {
+      /* Control this width dynamically with your JS */
+      width: 0%; 
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+      border-radius: 999px;
+      
+      /* A smooth transition ensures the bar doesn't jump rigidly */
+      transition: width 0.1s linear; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Glassmorphic Container -->
+  <div class="progress-card">
+    <div class="card-header">
+      <span class="status-text">Downloading file...</span>
+      <!-- Target this ID to update the percentage text (e.g., 45%) -->
+      <span id="percentage-text" class="percentage-text">0</span>
+    </div>
+
+    <div class="progress-track">
+      <!-- Target this ID to update the CSS width property (e.g., width = 45%) -->
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- Write your progress logic inside this tag -->
+  <script>
+    let bar = document.querySelector("#progress-fill")
+    let progress = document.querySelector("#percentage-text");
+
+    let time = 3;
+    let count = 0;
+
+    let evnt = setInterval(() => {
+        if (count <= 99) {
+            count++;
+            progress.textContent = `${count}%`;
+            bar.style.width = `${count}%`;
+        } else {
+            document.querySelector(".status-text").textContent = "Downloaded."
+            clearInterval(evnt);
+        }
+    }, (time * 1000) / 100);
+    
+  </script>
+</body>
+</html>
